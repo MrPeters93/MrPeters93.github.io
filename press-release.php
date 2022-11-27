@@ -1,4 +1,4 @@
-<?php
+<? php
 session_start();
 ?>
 
@@ -12,25 +12,20 @@ session_start();
 <body class="BodyPress">
 
 <!-- Navigeringsmeny -->
-
+<div id="NavBar">
 <div class="Big">
-<div id="home" title="Startsida">
-  <a href ="Start.php">
+<div id="home" title="Github">
+  <a href ="https://github.com/MrPeters93/MrPeters93.github.io">
     <i class="material-icons">
-      home
+      hub
     </i>
   </a>
 </div>
-<div title="Alla Svar">
-    <a id="Return" href="JSvar.php">
-    <i class="material-icons">
-      list
-  </i>
-  </a>
 </div>
 </div>
 
 <!-- Filter -->
+<div id="FilterBar">
   <div class="Filter">
     Select type
     <select id="FilterType">
@@ -104,6 +99,7 @@ session_start();
       echo '</div>';
       ?>
     </div>
+</div>
 </div>
 
 <!-- Hämtning av jquery för användande inom javascript -->
