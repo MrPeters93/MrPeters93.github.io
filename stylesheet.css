@@ -174,76 +174,9 @@ flex-direction: column;
 align-content: center;
 }
 
-.SideBar{
-  grid-column: 2/3;
-  grid-row: 2/3;
-}
 
-.collapsible {
-  color: teal;
-  font-size: 15px;
-}
-
-.active .collapsible:hover{
-  background-color:#ccc;
-}
-
-.content{
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  border-style:solid;
-  border-width:thin;
-}
-
-.Bottom {
-  align-self:flex-end;
-}
 
 
 * {
 font-family: "Arial";
 }
-
-/*Pre-made dropdown code from w3*/
-
-/* Dropdown Button */
-.dropbtn {
-
-}
-
-/* Dropdown button on hover & focus */
-.dropbtn:hover, .dropbtn:focus {
- background-color: #2980B9;
-}
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
- position: relative;
- display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  margin-top:0px;
- display: none;
- position: absolute;
- background-color: #f1f1f1;
- min-width: 160px;
- box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
- z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
- color: black;
- padding: 12px 16px;
- text-decoration: none;
- display: block;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
-
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:block;}

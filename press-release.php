@@ -67,39 +67,26 @@ ini_set("allow_url_fopen", 1);
 
 </div>
 <div id="releases">
+  <!-- curl -->
   <?php
 
-  // Initializing curl
   $curl = curl_init();
 
-  // Sending GET request to reqres.in
-  // server to get JSON data
   curl_setopt($curl, CURLOPT_URL,
   "https://feed.mfn.se/v1/feed/7c0dc3f4-0d57-4bea-ba07-94a9ff1f543f.json");
 
-  // Telling curl to store JSON
-  // data in a variable instead
-  // of dumping on screen
   curl_setopt($curl,
   CURLOPT_RETURNTRANSFER, true);
 
-  // Executing curl
   $response = curl_exec($curl);
 
-  // Checking if any error occurs
-  // during request or not
   if($e = curl_error($curl)) {
     echo $e;
   } else {
 
-    // Decoding JSON data
     $decodedData =
     json_decode($response, true);
 
-    // Outputting JSON data in
-    // Decoded form
-
-    //if (!($_GET['regulatory'])){}
 
     ?>
     <div id="articles">
@@ -124,16 +111,14 @@ ini_set("allow_url_fopen", 1);
       <?php
     }
 
-    // Closing curl
     curl_close($curl);
     ?>
 
   </div>
 
-  <!-- Hämtning av jquery för användande inom javascript -->
+<!-- JS -->
   <script src="jquery-3.3.1.min.js"></script>
 
-  <!-- Påbörjan av javascript -->
   <script>
 
   function updateList(){
@@ -145,20 +130,12 @@ ini_set("allow_url_fopen", 1);
     table = document.getElementById("articles");
     art = table.getElementsByClassName("article");
 
-    console.log(table);
-    console.log(art);
 
     for (i = 0; i < art.length; i++) {
-      console.log(art[i].children);
       td0 = art[i].children[0].textContent;
       td1 = art[i].children[1].textContent;
 
-      console.log(td0, td1);
-
       if (td0) {
-
-      console.log(td0);
-      console.log(regCheck);
 
       if (td0.indexOf(regCheck) > -1 && td1.indexOf(yearCheck) > -1)
       {
