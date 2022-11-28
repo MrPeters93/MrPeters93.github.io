@@ -22,6 +22,6 @@ The files are to be placed in the following directory:
 C:\xampp\htdocs\
 ![image](https://user-images.githubusercontent.com/29412928/204185868-54c06e94-f7f0-42bf-a9a6-78db2510e314.png)
 
-If the directory 
+If the directory isn't working properly, go into XAMPP and click Config on the row of Apache. Select to edit the file http.conf and search for "DocumentRoot", this will show you the location where your PHP files goes.
 
 Assuming that Apache is enabled, you should now be able to navigate to localhost in your browser of choice and it will in turn open index.php which will send you to press-release.php
