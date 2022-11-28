@@ -35,13 +35,20 @@ ini_set("allow_url_fopen", 1);
   <!-- Filter -->
   <div class="FilterBar">
     <div class="Filter" style="align-self:center">
-      Select type
-      <select id="FilterType" onselect="updateList()">
-        <option><a href="?Regulatory">1</a></option>
-        <option value="Man">2</option>
-        <option value="Kvinna">3</option>
-        <option value="Annan">4</option>
+      <div>
+      Regulatory?
+      <select id="FilterType" value="" style="margin-right:0px;">
+        <option value=":regulatory">Yes</option>
+        <option value="sub:ci">No</option>
+        <option value="">All</option>
       </select>
+    </div>
+<div>
+  Year:
+      <select id="FilterYear" value="" style="margin-right:0px;">
+        <option></option>
+      </select>
+    </div>
     </div>
 
     <!-- Filtrera på frågor -->
@@ -91,38 +98,74 @@ ini_set("allow_url_fopen", 1);
 
     ?>
     <div id="articles">
-          <?php foreach ($decodedData["items"] as $key => $value): ?>
-            <div class="article">
+      <?php foreach ($decodedData["items"] as $key => $value): ?>
 
-              <?php $date= date_create($value["content"]["publish_date"]);
-              $date2= date_format($date, "Y/m/d H:i");
+        <?php echo "<div name='article' class='article' id=".$value['news_id'].">"?>
+        <?php $date= date_create($value["content"]["publish_date"]);
+        $date2= date_format($date, "Y/m/d H:i");?>
+        <?php echo "<div name='regulatory' style='visibility:hidden;' id = 'regulatory'>".$value['properties']['tags']['0']."</div>"?>
+        <?php echo "<div name='regulatory' style='visibility:hidden;' id = 'year'>".date_format($date, "Y")."</div>"?>
 
-              ?>
-              <div class ="a_date"><?php echo $date2;?><br></div>
-              <?php echo "<a href=".$value["content"]["attachments"][0]["url"].">"?>
+          <div class ="a_date"><?php echo $date2;?><br></div>
+          <?php echo "<a target='_blank' href=".$value["content"]["attachments"][0]["url"].">"?>
             <div class="a_title"><?php echo $value["content"]["title"];?> <br></div>
             <div class="a_url">Read more</a></div>
+
           </div>
-          <?php endforeach; ?>
+        <?php endforeach; ?>
       </div>
 
 
-    <?php
+      <?php
+    }
+
+    // Closing curl
+    curl_close($curl);
+    ?>
+
+  </div>
+
+  <!-- Hämtning av jquery för användande inom javascript -->
+  <script src="jquery-3.3.1.min.js"></script>
+
+  <!-- Påbörjan av javascript -->
+  <script>
+
+  function updateList(){
+    var table, art, td, i, txtValue;
+    var regCheck = document.getElementById("FilterType").value;
+
+    var yearCheck = "2022";
+
+    table = document.getElementById("articles");
+    art = table.getElementsByClassName("article");
+
+    console.log(table);
+    console.log(art);
+
+    for (i = 0; i < art.length; i++) {
+      console.log(art[i].children);
+      td0 = art[i].children[0].textContent;
+      td1 = art[i].children[1].textContent;
+
+      console.log(td0, td1);
+
+      if (td0) {
+
+      console.log(td0);
+      console.log(regCheck);
+
+      if (td0.indexOf(regCheck) > -1 && td1.indexOf(yearCheck) > -1)
+      {
+        art[i].style.display = "flex";
+      }
+
+      else
+      {
+        art[i].style.display = "none";
+      }
   }
-
-  // Closing curl
-  curl_close($curl);
-  ?>
-
-</div>
-
-<!-- Hämtning av jquery för användande inom javascript -->
-<script src="jquery-3.3.1.min.js"></script>
-
-<!-- Påbörjan av javascript -->
-<script>
-
-function updateList(){
+}
 }
 
 </script>
