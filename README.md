@@ -1,5 +1,5 @@
 
-Not the prettiest site, but on a timespan of about ~6 hours, I am adequately pleased with the outcome.
+Not the prettiest site, but on a timespan of a few hours, I am adequately pleased with the outcome.
 
 I did contemplate creating a windows application which would've been more of a challenge, but one I'd welcome - always fun with challenges.
 
