@@ -63,11 +63,13 @@ flex-direction: column;
 }
 
 .a_date{
+  color: #2f637d;
+  opacity: 0.74;
 
 }
 
 .a_url{
-
+  margin-left:auto;
 }
 .NavBar a{
   font-size:20px;

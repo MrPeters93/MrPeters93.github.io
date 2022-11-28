@@ -36,8 +36,8 @@ ini_set("allow_url_fopen", 1);
   <div class="FilterBar">
     <div class="Filter" style="align-self:center">
       Select type
-      <select id="FilterType" onchange="updateList()">
-        <option value="">1</option>
+      <select id="FilterType" onselect="updateList()">
+        <option><a href="?Regulatory">1</a></option>
         <option value="Man">2</option>
         <option value="Kvinna">3</option>
         <option value="Annan">4</option>
@@ -98,10 +98,10 @@ ini_set("allow_url_fopen", 1);
               $date2= date_format($date, "Y/m/d H:i");
 
               ?>
-
+              <div class ="a_date"><?php echo $date2;?><br></div>
+              <?php echo "<a href=".$value["content"]["attachments"][0]["url"].">"?>
             <div class="a_title"><?php echo $value["content"]["title"];?> <br></div>
-            <div class ="a_date"><?php echo $date2;?><br></div>
-            <div class="a_url"><?php echo "<a href=".$value["content"]["attachments"][0]["url"].">Read more</a>";?></div>
+            <div class="a_url">Read more</a></div>
           </div>
           <?php endforeach; ?>
       </div>
