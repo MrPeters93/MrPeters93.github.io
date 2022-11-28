@@ -38,15 +38,20 @@ ini_set("allow_url_fopen", 1);
       <div>
       Regulatory?
       <select id="FilterType" value="" style="margin-right:0px;">
+        <option value="">All</option>
         <option value=":regulatory">Yes</option>
         <option value="sub:ci">No</option>
-        <option value="">All</option>
       </select>
     </div>
 <div>
   Year:
       <select id="FilterYear" value="" style="margin-right:0px;">
-        <option></option>
+        <option value="">Every year</option>
+        <?php
+        for($i = date("Y"); $i> 2000; $i--){
+          echo "<option>".$i."</option>";
+        }
+        ?>
       </select>
     </div>
     </div>
@@ -100,7 +105,7 @@ ini_set("allow_url_fopen", 1);
     <div id="articles">
       <?php foreach ($decodedData["items"] as $key => $value): ?>
 
-        <?php echo "<div name='article' class='article' id=".$value['news_id'].">"?>
+        <?php echo "<div name='article' class='article' id=".$value['news_id'].">";?>
         <?php $date= date_create($value["content"]["publish_date"]);
         $date2= date_format($date, "Y/m/d H:i");?>
         <?php echo "<div name='regulatory' style='visibility:hidden;' id = 'regulatory'>".$value['properties']['tags']['0']."</div>"?>
@@ -135,7 +140,7 @@ ini_set("allow_url_fopen", 1);
     var table, art, td, i, txtValue;
     var regCheck = document.getElementById("FilterType").value;
 
-    var yearCheck = "2022";
+    var yearCheck = document.getElementById("FilterYear").value;
 
     table = document.getElementById("articles");
     art = table.getElementsByClassName("article");
