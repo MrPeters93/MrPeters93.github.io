@@ -17,7 +17,7 @@ ini_set("allow_url_fopen", 1);
   <div class="NavBar">
     <div class="Big">
       <div id="Github_link" title="Github">
-        <a href ="https://github.com/MrPeters93/MrPeters93.github.io">
+        <a target="_blank" href ="https://github.com/MrPeters93/MrPeters93.github.io">
           Github
           <span class="material-symbols-outlined">
             home_storage
