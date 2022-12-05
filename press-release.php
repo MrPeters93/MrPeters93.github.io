@@ -10,6 +10,39 @@ ini_set("allow_url_fopen", 1);
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
+
+  <script type="text/javascript">
+  yearFilter = document.getElementById("FilterYear");
+  years = [];
+
+  console.log(years[0]);
+
+  window.addEventListener('load', function () {
+
+    function onlyUnique(value, index, self) {
+      return self.indexOf(value) === index;
+    }
+
+    function updateYear(){
+
+      var uniqueYears = years.filter(onlyUnique);
+
+      console.log(uniqueYears[0]);
+
+      for (const item in uniqueYears){
+        if (item != 0 && item != 1){
+        var option = document.createElement("option");
+        option.text = item;
+        select.add(option);
+      }
+      };
+    }
+      updateYear();
+  })
+
+
+
+  </script>
 </head>
 
 <body class="BodyPress">
@@ -61,14 +94,20 @@ ini_set("allow_url_fopen", 1);
         Year:
         <select id="FilterYear" value="" style="margin-right:0px;">
           <option value="">Every year</option>
+          <!-- Pre-automated years
           <?php
           for($i = date("Y"); $i> 2000; $i--){
             echo "<option>".$i."</option>";
           }
           ?>
+        -->
         </select>
       </div>
     </div>
+
+    <script type="text/javascript">
+          yearFilter = document.querySelector("FilterYear");
+          </script>
 
     <!-- Filtrera på frågor -->
     <div style="align-self:center;">
@@ -111,7 +150,6 @@ ini_set("allow_url_fopen", 1);
           $date2= date_format($date, "Y/m/d H:i");?>
           <?php echo "<div name='regulatory' style='visibility:hidden;' id = 'regulatory'>".$value['properties']['tags']['0']."</div>"?>
           <?php echo "<div name='regulatory' style='visibility:hidden;' id = 'year'>".date_format($date, "Y")."</div>"?>
-
           <div class ="a_date"><?php echo $date2;?><br></div>
 
           <!-- href to pdf <?php echo "<a target='_blank' href=".$value["content"]["attachments"][0]["url"].">" ?>-->
@@ -119,8 +157,30 @@ ini_set("allow_url_fopen", 1);
             <div class="a_title"><?php echo $value["content"]["title"];?> <br></div>
             <button class='a_url' onclick="showPreview('<?php echo $value['news_id']."','".$value['content']['attachments'][0]['url'] ?>')">Read more<!--</a>--></button>
           </div>
-          
+
+          <script type="text/javascript">
+            year = <?php echo ''.date_format($date, "Y").';'?>
+
+          if(years.indexOf(year) === -1 && year != 1 && year != 0) {
+            years.push(year);
+          }
+
+          </script>
+
         <?php endforeach; ?>
+
+        <script>
+
+        select = document.getElementById("FilterYear");
+
+        for (const item of years){
+          var option = document.createElement("option");
+          option.text = item;
+          select.add(option);
+        };
+
+        </script>
+
       </div>
 
 
@@ -174,9 +234,9 @@ ini_set("allow_url_fopen", 1);
     document.getElementById("PreviewWindow").style.display = "block";
     document.getElementById("pdfpreview").data = pdf;
 
-
-
   }
+
+
 
   function closePreview(){
 
@@ -184,6 +244,8 @@ ini_set("allow_url_fopen", 1);
 
     document.getElementById("PreviewWindow").style.display = "none";
   }
+
+
 
 </script>
 
