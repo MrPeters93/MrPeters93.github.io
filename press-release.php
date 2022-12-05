@@ -87,7 +87,7 @@ ini_set("allow_url_fopen", 1);
   $curl = curl_init();
 
   curl_setopt($curl, CURLOPT_URL,
-  "https://feed.mfn.se/v1/feed/7c0dc3f4-0d57-4bea-ba07-94a9ff1f543f.json");
+  "https://feed.mfn.se/v1/feed/7c0dc3f4-0d57-4bea-ba07-94a9ff1f543f.json?limit=150");
 
   curl_setopt($curl,
   CURLOPT_RETURNTRANSFER, true);
@@ -113,12 +113,13 @@ ini_set("allow_url_fopen", 1);
           <?php echo "<div name='regulatory' style='visibility:hidden;' id = 'year'>".date_format($date, "Y")."</div>"?>
 
           <div class ="a_date"><?php echo $date2;?><br></div>
-          
+
           <!-- href to pdf <?php echo "<a target='_blank' href=".$value["content"]["attachments"][0]["url"].">" ?>-->
 
             <div class="a_title"><?php echo $value["content"]["title"];?> <br></div>
             <button class='a_url' onclick="showPreview('<?php echo $value['news_id']."','".$value['content']['attachments'][0]['url'] ?>')">Read more<!--</a>--></button>
           </div>
+          
         <?php endforeach; ?>
       </div>
 
