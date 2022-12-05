@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 ini_set("allow_url_fopen", 1);
@@ -13,7 +14,7 @@ ini_set("allow_url_fopen", 1);
 
 <body class="BodyPress">
 
-  <!-- Navigeringsmeny -->
+  <!-- NavMenu -->
   <div class="NavBar">
     <div class="Big">
       <div id="Github_link" title="Github">
@@ -32,28 +33,41 @@ ini_set("allow_url_fopen", 1);
   <h1 id ="Greetings">Greetings </h1>
 
 
+  <!-- Preview -->
+
+  <div id="PreviewWindow">
+
+    <button onclick="closePreview()" class="material-symbols-outlined" style="margin-left:100.6%;margin-top:2%;position:relative;border-radius: 10% 70% 70% 10%; padding:8px">close</button>
+
+    <div style="display:relative;">
+      <object id="pdfpreview" data="" type="application/pdf" style="margin-top:-5%;width:95%; height:95%;margin-left:2.5%;"></object>
+    </div>
+    <div id="readmore" href=""></div>
+  </div>
+
+
   <!-- Filter -->
   <div class="FilterBar">
     <div class="Filter" style="align-self:center">
       <div>
-      Regulatory?
-      <select id="FilterType" value="" style="margin-right:0px;">
-        <option value="">All</option>
-        <option value=":regulatory">Yes</option>
-        <option value="sub:ci">No</option>
-      </select>
-    </div>
-<div>
-  Year:
-      <select id="FilterYear" value="" style="margin-right:0px;">
-        <option value="">Every year</option>
-        <?php
-        for($i = date("Y"); $i> 2000; $i--){
-          echo "<option>".$i."</option>";
-        }
-        ?>
-      </select>
-    </div>
+        Regulatory?
+        <select id="FilterType" value="" style="margin-right:0px;">
+          <option value="">All</option>
+          <option value=":regulatory">Yes</option>
+          <option value="sub:ci">No</option>
+        </select>
+      </div>
+      <div>
+        Year:
+        <select id="FilterYear" value="" style="margin-right:0px;">
+          <option value="">Every year</option>
+          <?php
+          for($i = date("Y"); $i> 2000; $i--){
+            echo "<option>".$i."</option>";
+          }
+          ?>
+        </select>
+      </div>
     </div>
 
     <!-- Filtrera på frågor -->
@@ -93,16 +107,17 @@ ini_set("allow_url_fopen", 1);
       <?php foreach ($decodedData["items"] as $key => $value): ?>
 
         <?php echo "<div name='article' class='article' id=".$value['news_id'].">";?>
-        <?php $date= date_create($value["content"]["publish_date"]);
-        $date2= date_format($date, "Y/m/d H:i");?>
-        <?php echo "<div name='regulatory' style='visibility:hidden;' id = 'regulatory'>".$value['properties']['tags']['0']."</div>"?>
-        <?php echo "<div name='regulatory' style='visibility:hidden;' id = 'year'>".date_format($date, "Y")."</div>"?>
+          <?php $date= date_create($value["content"]["publish_date"]);
+          $date2= date_format($date, "Y/m/d H:i");?>
+          <?php echo "<div name='regulatory' style='visibility:hidden;' id = 'regulatory'>".$value['properties']['tags']['0']."</div>"?>
+          <?php echo "<div name='regulatory' style='visibility:hidden;' id = 'year'>".date_format($date, "Y")."</div>"?>
 
           <div class ="a_date"><?php echo $date2;?><br></div>
-          <?php echo "<a target='_blank' href=".$value["content"]["attachments"][0]["url"].">"?>
-            <div class="a_title"><?php echo $value["content"]["title"];?> <br></div>
-            <div class="a_url">Read more</a></div>
+          
+          <!-- href to pdf <?php echo "<a target='_blank' href=".$value["content"]["attachments"][0]["url"].">" ?>-->
 
+            <div class="a_title"><?php echo $value["content"]["title"];?> <br></div>
+            <button class='a_url' onclick="showPreview('<?php echo $value['news_id']."','".$value['content']['attachments'][0]['url'] ?>')">Read more<!--</a>--></button>
           </div>
         <?php endforeach; ?>
       </div>
@@ -116,8 +131,8 @@ ini_set("allow_url_fopen", 1);
 
   </div>
 
-<!-- JS -->
-  <script src="jquery-3.3.1.min.js"></script>
+  <!-- JS -->
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
   <script>
 
@@ -137,18 +152,37 @@ ini_set("allow_url_fopen", 1);
 
       if (td0) {
 
-      if (td0.indexOf(regCheck) > -1 && td1.indexOf(yearCheck) > -1)
-      {
-        art[i].style.display = "flex";
-      }
+        if (td0.indexOf(regCheck) > -1 && td1.indexOf(yearCheck) > -1)
+        {
+          art[i].style.display = "flex";
+        }
 
-      else
-      {
-        art[i].style.display = "none";
+        else
+        {
+          art[i].style.display = "none";
+        }
       }
+    }
   }
-}
-}
+
+  function showPreview(newsID, pdf){
+
+    console.log(newsID);
+    console.log(pdf)
+
+    document.getElementById("PreviewWindow").style.display = "block";
+    document.getElementById("pdfpreview").data = pdf;
+
+
+
+  }
+
+  function closePreview(){
+
+    console.log("close");
+
+    document.getElementById("PreviewWindow").style.display = "none";
+  }
 
 </script>
 
