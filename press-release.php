@@ -22,7 +22,11 @@ ini_set("allow_url_fopen", 1);
 
   window.addEventListener('load', function () {
 
-
+    previewShade = document.getElementById("ShadedBackground");
+    previewShade.addEventListener("click", function(){
+      previewShade.style.display = "none";
+      document.getElementById("PreviewWindow").style.display = "none";
+    })
 
 
   })
@@ -63,6 +67,10 @@ ini_set("allow_url_fopen", 1);
       <object id="pdfpreview" data="" type="application/pdf" style="margin-top:-5%;width:95%; height:95%;margin-left:2.5%;"></object>
     </div>
     <div id="readmore" href=""></div>
+  </div>
+
+  <div id="ShadedBackground">
+
   </div>
 
 
@@ -222,12 +230,9 @@ ini_set("allow_url_fopen", 1);
   }
 
   function showPreview(newsID, pdf){
-
-    console.log(newsID);
-    console.log(pdf)
-
     document.getElementById("PreviewWindow").style.display = "block";
     document.getElementById("pdfpreview").data = pdf;
+    document.getElementById("ShadedBackground").style.display = "block";
 
   }
 
@@ -238,6 +243,7 @@ ini_set("allow_url_fopen", 1);
     console.log("close");
 
     document.getElementById("PreviewWindow").style.display = "none";
+    document.getElementById("ShadedBackground").style.display = "none";
   }
 
 
