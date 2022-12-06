@@ -12,32 +12,19 @@ ini_set("allow_url_fopen", 1);
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
   <script type="text/javascript">
-  yearFilter = document.getElementById("FilterYear");
-  years = [];
 
-  console.log(years[0]);
+  yearFilter = document.getElementById("FilterYear");
+  langFilter = document.getElementById("LangFilter");
+
+  years = [];
+  languages = [];
+
 
   window.addEventListener('load', function () {
 
-    function onlyUnique(value, index, self) {
-      return self.indexOf(value) === index;
-    }
 
-    function updateYear(){
 
-      var uniqueYears = years.filter(onlyUnique);
 
-      console.log(uniqueYears[0]);
-
-      for (const item in uniqueYears){
-        if (item != 0 && item != 1){
-        var option = document.createElement("option");
-        option.text = item;
-        select.add(option);
-      }
-      };
-    }
-      updateYear();
   })
 
 
@@ -84,7 +71,7 @@ ini_set("allow_url_fopen", 1);
     <div class="Filter" style="align-self:center">
       <div>
         Regulatory?
-        <select id="FilterType" value="" style="margin-right:0px;">
+        <select id="FilterType" value="">
           <option value="">All</option>
           <option value=":regulatory">Yes</option>
           <option value="sub:ci">No</option>
@@ -92,22 +79,17 @@ ini_set("allow_url_fopen", 1);
       </div>
       <div>
         Year:
-        <select id="FilterYear" value="" style="margin-right:0px;">
+        <select id="FilterYear" value="">
           <option value="">Every year</option>
-          <!-- Pre-automated years
-          <?php
-          for($i = date("Y"); $i> 2000; $i--){
-            echo "<option>".$i."</option>";
-          }
-          ?>
-        -->
+        </select>
+      </div>
+      <div>
+        Language:
+        <select id="FilterLang" value="">
+          <option value="">Every Language</option>
         </select>
       </div>
     </div>
-
-    <script type="text/javascript">
-          yearFilter = document.querySelector("FilterYear");
-          </script>
 
     <!-- Filtrera på frågor -->
     <div style="align-self:center;">
@@ -149,7 +131,8 @@ ini_set("allow_url_fopen", 1);
           <?php $date= date_create($value["content"]["publish_date"]);
           $date2= date_format($date, "Y/m/d H:i");?>
           <?php echo "<div name='regulatory' style='visibility:hidden;' id = 'regulatory'>".$value['properties']['tags']['0']."</div>"?>
-          <?php echo "<div name='regulatory' style='visibility:hidden;' id = 'year'>".date_format($date, "Y")."</div>"?>
+          <?php echo "<div name='year' style='visibility:hidden;' id = 'year'>".date_format($date, "Y")."</div>" ?>
+          <?php echo "<div name='lang' style='visibility:hidden;' id = 'language'>".$value['properties']['lang']."</div>" ?>
           <div class ="a_date"><?php echo $date2;?><br></div>
 
           <!-- href to pdf <?php echo "<a target='_blank' href=".$value["content"]["attachments"][0]["url"].">" ?>-->
@@ -160,24 +143,35 @@ ini_set("allow_url_fopen", 1);
 
           <script type="text/javascript">
             year = <?php echo ''.date_format($date, "Y").';'?>
-
+            lang = <?php echo '"'.$value['properties']['lang'].'";'?>
           if(years.indexOf(year) === -1 && year != 1 && year != 0) {
             years.push(year);
+          }
+
+          if (languages.indexOf(lang) === -1){
+            languages.push(lang);
           }
 
           </script>
 
         <?php endforeach; ?>
 
-        <script>
+        <script> //Fill selects
 
         select = document.getElementById("FilterYear");
+        langSelect = document.getElementById("FilterLang");
 
         for (const item of years){
           var option = document.createElement("option");
           option.text = item;
           select.add(option);
         };
+
+        for (const item of languages){
+          var langOption = document.createElement("option");
+          langOption.text = item;
+          langSelect.add(langOption);
+        }
 
         </script>
 
@@ -197,11 +191,12 @@ ini_set("allow_url_fopen", 1);
 
   <script>
 
-  function updateList(){
+  function updateList(){ //Filter selects
     var table, art, td, i, txtValue;
-    var regCheck = document.getElementById("FilterType").value;
 
+    var regCheck = document.getElementById("FilterType").value;
     var yearCheck = document.getElementById("FilterYear").value;
+    var langCheck = document.getElementById("FilterLang").value;
 
     table = document.getElementById("articles");
     art = table.getElementsByClassName("article");
@@ -210,14 +205,14 @@ ini_set("allow_url_fopen", 1);
     for (i = 0; i < art.length; i++) {
       td0 = art[i].children[0].textContent;
       td1 = art[i].children[1].textContent;
+      td2 = art[i].children[2].textContent;
 
       if (td0) {
 
-        if (td0.indexOf(regCheck) > -1 && td1.indexOf(yearCheck) > -1)
+        if (td0.indexOf(regCheck) > -1 && td1.indexOf(yearCheck) > -1 && td2.indexOf(langCheck) > -1)
         {
           art[i].style.display = "flex";
         }
-
         else
         {
           art[i].style.display = "none";
